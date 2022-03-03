@@ -3,4 +3,6 @@ project(Simple_Shell)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(Simple_Shell main.c user_string.c init_wd.c cd.c)
+add_executable(Simple_Shell main.c user_string.c init_wd.c cd.c history.c)
+
+target_link_libraries(Simple_Shell -lreadline)
