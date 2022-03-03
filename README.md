@@ -1,3 +1,3 @@
 # Simple Shell
 
-使用Java实现的简易shell。
+使用C实现的简易shell。
