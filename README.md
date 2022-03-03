@@ -1,3 +1,3 @@
 # Simple Shell
 
-使用C实现的简易shell。
+A simple shell implemented in C. Note that we only support UNIX/Linux.
