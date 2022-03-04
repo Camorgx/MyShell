@@ -74,6 +74,6 @@ void full_path(char* dest) {
     }
     full_path_work(dest);
     strcpy(dest, cwd_copy);
-    free(cwd_copy);
+    //free(cwd_copy); /// Strange, free here will lead to error.
     if (strlen(dest) != 1 && dest[strlen(dest) - 1] == '/') dest[strlen(dest) - 1] = '\0';
 }

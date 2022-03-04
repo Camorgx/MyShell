@@ -7,7 +7,8 @@
 #include <string.h>
 #include <sys/wait.h>
 
-int handle_input(char* input) {
+void handle_input(char* input) {
+    if (strlen(input) == 0) return;
     char** input_split = split(input);
     if (!strcmp(input_split[0], "cd")) cd(input_split[1]);
     else if (!strcmp(input_split[0], "history")) history();
