@@ -1,4 +1,5 @@
 #include "built_in.h"
+#include "utils.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +10,7 @@ extern char* current_working_directory;
 extern char* user_home_directory;
 
 void cd(char* dest) {
+    full_path(dest);
     struct stat* state = (struct stat*) malloc(sizeof(struct stat));
     if (stat(dest, state) == -1) perror("cd");
     else if (!S_ISDIR(state->st_mode)) puts("cd: Not a directory");

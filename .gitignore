@@ -1,5 +1,6 @@
-out/
 .idea
+.vscode
 build
+out
 cmake-build-debug
 cmake-build-release

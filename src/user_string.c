@@ -20,7 +20,7 @@ char* user_string() {
     int buffer_size = 20;
     while (gethostname(host_name, buffer_size) == -1) {
         buffer_size <<= 1;
-        host_name = reallocarray(host_name, buffer_size, sizeof(char));
+        host_name = (char*) reallocarray(host_name, buffer_size, sizeof(char));
     }
     char* ans = (char*) calloc(strlen(usr->pw_name) + strlen(host_name) + 10,
                                sizeof(char));
