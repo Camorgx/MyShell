@@ -19,8 +19,10 @@ int main(int argc, const char** argv) {
     sprintf(history_save_path, "%s/.simple_shell_history", user_home_directory);
     read_history(history_save_path);
     while (1) {
+        char* dd = display_directory();
         sprintf(line_head, "\001\033[""49"";""34""m\002[%s%s]%s\001\033[0m\002",
-                user_str, current_working_directory, is_root ? "# " : "$ ");
+                user_str, dd, is_root ? "# " : "$ ");
+        free(dd);
         char* input_line = readline(line_head);
         if (!input_line) { puts("exit"); break; }
         add_history(input_line);
