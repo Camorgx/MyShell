@@ -1,4 +1,5 @@
 #include "init.h"
+#include "utils.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,6 +25,7 @@ int main(int argc, const char** argv) {
         if (!input_line) { puts("exit"); break; }
         add_history(input_line);
         write_history(history_save_path);
+        handle_input(input_line);
         free(input_line);
     }
     return 0;

@@ -3,6 +3,8 @@
 
 void full_path(char* dest);
 
-char** split(char* line);
+char** split(const char* line);
+
+int handle_input(char* input);
 
 #endif //SIMPLE_SHELL_UTILS_H

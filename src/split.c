@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-char** split(char* line) {
+char** split(const char* line) {
     int quote_cnt = 0;
     for (int i = 0; line[i] != '\0'; ++i)
         if (line[i] == '\"') ++quote_cnt;
@@ -11,7 +11,6 @@ char** split(char* line) {
     int cnt = 0, cnt_p = 0;
     int in_quote = 0;
     int num = 8, num_p = 8;
-    int pos[256];
     char** ans = (char**) calloc(num_p, sizeof(char*));
     ans[0] = (char*) calloc(num, sizeof(char));
     for (int i = 0; line[i] != '\0'; ++i) {

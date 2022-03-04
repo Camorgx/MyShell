@@ -49,9 +49,9 @@ void full_path_work(char* dest) {
         for (int i = 0; dest[i] != '\0'; ++i) {
             if (dest[i] == '/') {
                 if (cwd_copy[strlen(cwd_copy) - 1] != '/') {
-                    int len = strlen(cwd_copy);
-                    cwd_copy[len] = '/';
-                    cwd_copy[len + 1] = '\0';
+                    int l = strlen(cwd_copy);
+                    cwd_copy[l] = '/';
+                    cwd_copy[l + 1] = '\0';
                 }
                 full_path_work(dest + i + 1);
                 break;
