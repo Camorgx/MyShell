@@ -1,10 +1,10 @@
 #ifndef SIMPLE_SHELL_INIT_H
 #define SIMPLE_SHELL_INIT_H
 
-char* user_string();
+#include <string>
 
-char* init_wd();
+std::string user_string();
 
-char* display_directory();
+std::string init_wd();
 
 #endif //SIMPLE_SHELL_INIT_H

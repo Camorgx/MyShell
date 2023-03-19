@@ -2,14 +2,14 @@ cmake_minimum_required(VERSION 3.20)
 project(Simple_Shell)
 
 set(CMAKE_C_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 add_executable(Simple_Shell
-        src/main.c src/user_string.c
-        src/init_wd.c src/cd.c src/split.c
-        src/history.c src/full_path.c 
-        src/handle_input.c src/display_directory.c)
+        src/main.cpp src/user_string.cpp src/global.cpp
+        src/init_wd.cpp src/cd.cpp src/split.cpp
+        src/history.cpp src/handle_input.cpp)
 
 target_include_directories(Simple_Shell
 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-target_link_libraries(Simple_Shell -lreadline)
+target_link_libraries(Simple_Shell -lreadline -lfmt)
