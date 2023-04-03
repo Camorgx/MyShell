@@ -18,12 +18,25 @@ std::vector<string> string_split(const string& source) {
         else if (ch == '\"') in_quote = !in_quote;
         else if (ch == ' ') {
             if (in_quote) word += ch;
-            else {
+            else if (word.length()) {
                 tmp.emplace_back(word);
                 word = "";
             }
         }
         else if (ch == '\\') after_slash = true;
+        else if (ch == '<' || ch == '>' || ch == '|') {
+            if (word.length()) {
+                tmp.emplace_back(word);
+                word = "";
+            }
+            if (ch == '<' && tmp.back() == "<" 
+                || ch == '>' && tmp.back() == ">")
+                tmp.back() += ch;
+            else {
+                char s[] = { ch, '\0' };
+                tmp.emplace_back(s);
+            }
+        }
         else word += ch;
     }
     tmp.emplace_back(word);

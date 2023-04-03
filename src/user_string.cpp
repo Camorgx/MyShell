@@ -5,7 +5,6 @@
 #include <pwd.h>
 
 #include <string>
-#include <fmt/format.h>
 
 std::string user_string() {
     struct passwd* usr = getpwuid(getuid());
@@ -21,5 +20,5 @@ std::string user_string() {
     }
     std::string host_name(host_buffer);
     delete[] host_buffer;
-    return fmt::format("{}@{}", user_name, host_name);
+    return user_name + "@" + host_name;
 }

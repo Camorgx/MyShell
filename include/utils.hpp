@@ -8,4 +8,6 @@ std::vector<std::string> string_split(const std::string& source);
 
 void handle_input(const std::string& input);
 
+void exec_redirection(const std::vector<std::string>& argv);
+
 #endif //SIMPLE_SHELL_UTILS_H

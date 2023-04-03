@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <cstdlib>
 
+#include <cstring>
 #include <fmt/format.h>
 #include <string>
 
@@ -23,10 +24,9 @@ int main(int argc, const char** argv) {
                 user_str.c_str(), current_working_directory.c_str(), is_root ? "# " : "$ ");
         char* input_line = readline(line_head);
         if (!input_line) { puts("exit"); exit(0); }
-        add_history(input_line);
+        if (std::strlen(input_line)) add_history(input_line);
         write_history(history_save_path);
         handle_input(input_line);
-        free(input_line);
     }
     return 0;
 }

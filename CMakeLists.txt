@@ -12,4 +12,4 @@ add_executable(Simple_Shell
 target_include_directories(Simple_Shell
 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-target_link_libraries(Simple_Shell -lreadline -lfmt)
+target_link_libraries(Simple_Shell -lreadline)
