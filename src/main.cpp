@@ -3,7 +3,6 @@
 #include "utils.hpp"
 
 #include <cstdio>
-#include <cstdlib>
 
 #include <cstring>
 #include <fmt/format.h>
@@ -12,7 +11,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int main(int argc, const char** argv) {
+int main(void) {
     std::string user_str = user_string();
     char line_head[256];
     current_working_directory = init_wd();
@@ -23,7 +22,7 @@ int main(int argc, const char** argv) {
         sprintf(line_head, "\001\033[""49"";""34""m\002[%s %s]%s\001\033[0m\002",
                 user_str.c_str(), current_working_directory.c_str(), is_root ? "# " : "$ ");
         char* input_line = readline(line_head);
-        if (!input_line) { puts("exit"); exit(0); }
+        if (!input_line) { puts("exit"); break; }
         if (std::strlen(input_line)) add_history(input_line);
         write_history(history_save_path);
         handle_input(input_line);

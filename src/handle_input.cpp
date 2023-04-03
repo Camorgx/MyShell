@@ -1,7 +1,6 @@
 #include "utils.hpp"
 #include "built_in.hpp"
 
-#include <cstddef>
 #include <cstdio>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -102,6 +101,5 @@ void exec_redirection(const std::vector<std::string>& argv) {
     else {
         int status;
         waitpid(pid, &status, 0);
-        int err = WEXITSTATUS(status);
     }
 }
