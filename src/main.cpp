@@ -11,7 +11,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int main(void) {
+int main() {
     std::string user_str = user_string();
     char line_head[256];
     current_working_directory = init_wd();
