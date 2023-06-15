@@ -3,7 +3,7 @@ project(MyShell)
 
 set(CMAKE_C_STANDARD 17)
 
-add_executable(MyShell src/main.c src/utils.c)
+add_executable(MyShell src/main.c src/utils.c src/builtins.c src/global.c)
 
 target_include_directories(MyShell
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)

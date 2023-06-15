@@ -1,27 +1,22 @@
-#define MAX_LEN 1024
-#define MAX_ARGC 16
+#pragma once
 
-typedef struct command{
-	int argc;
-	char* argv[MAX_ARGC];
-	char input[MAX_LEN];
-	char output[MAX_LEN];
-} command;
+#include "global.h"
 
 // execute command without redirection or pipe
-void execute(command *c); 	
+extern void execute(command *c); 	
 
 // create pipe and execute command with execute()
-void execute_pipe();   	
+extern void execute_pipe(void);   	
 
 // handle redirection command
-void redirect(command *c);
+extern void redirect(command *c);
 
 // parse pipe command
-void parse_command(char *line);    
+extern void parse_command(char *line);    
 
 // parse argv of commands
-void parse_argv(char *line,int c_count); 
+extern void parse_argv(char *line,int c_count); 
 
-extern int command_count;
-extern command commands[4];
+extern void init(void);
+
+extern void update_display_dir(void);

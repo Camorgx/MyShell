@@ -1,3 +1,4 @@
+#include "global.h"
 #include "utils.h"
 
 #include <stdio.h>
@@ -6,10 +7,13 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int main() {
+int main(void) {
     char input[MAX_LEN];
+    init();
     while (1) {
-        printf(">>> ");
+        char prefix[MAX_LEN];
+        sprintf(prefix, "[%s %s]", user_string, displayed_directory);
+        printf("%s >>> ", prefix);
         fgets(input, MAX_LEN, stdin);
         input[strlen(input) - 1] = '\0';
         if (strlen(input) == 0) continue;
