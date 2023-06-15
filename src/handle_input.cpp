@@ -2,6 +2,7 @@
 #include "built_in.hpp"
 
 #include <cstdio>
+#include <vector>
 #include <unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
@@ -14,6 +15,22 @@ void handle_input(const std::string& input) {
     else if (input_split[0] == "history") history();
     else if (input_split[0] == "exit") exit(0);
     else {
+        std::vector<std::vector<std::string>> split;
+        int start_pos = 0;
+        size_t size  = input_split.size();
+        for (int i = 0; i < size; ++i) {
+            if (input_split[i] == "|") {
+                split.emplace_back();
+                for (int j = start_pos; j < i; ++j)
+                    split.back().emplace_back(input_split[j]);
+                start_pos = i + 1;
+            }
+        }
+        if (start_pos != size - 1) {
+            split.emplace_back();
+            for (int i = start_pos; i < size; ++i)
+                split.back().emplace_back(input_split[i]);
+        }
         exec_redirection(input_split);
     }
 }
