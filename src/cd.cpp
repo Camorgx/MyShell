@@ -10,7 +10,7 @@
 void cd(const std::string& dest) {
     std::string destination = dest.length() == 0 ? user_home_directory : dest;
     if (destination.starts_with("~"))
-        destination = user_home_directory + destination.substr(user_home_directory.length());
+        destination = user_home_directory + destination.substr(1);
     try {
         destination = std::filesystem::canonical(
             std::filesystem::path(destination)).string();

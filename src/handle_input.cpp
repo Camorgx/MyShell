@@ -1,11 +1,18 @@
 #include "utils.hpp"
 #include "built_in.hpp"
 
-#include <cstdio>
-#include <vector>
+
+
 #include <unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+
+#include <cstdio>
+#include <cstring>
+#include <filesystem>
+#include <iostream>
+#include <unordered_set>
+#include <vector>
 
 void handle_input(const std::string& input) {
     if (input.length() == 0) return;
@@ -15,30 +22,40 @@ void handle_input(const std::string& input) {
     else if (input_split[0] == "history") history();
     else if (input_split[0] == "exit") exit(0);
     else {
-        std::vector<std::vector<std::string>> split;
-        int start_pos = 0;
+        int pos = -1, cnt = 0;
         size_t size  = input_split.size();
         for (int i = 0; i < size; ++i) {
             if (input_split[i] == "|") {
-                split.emplace_back();
-                for (int j = start_pos; j < i; ++j)
-                    split.back().emplace_back(input_split[j]);
-                start_pos = i + 1;
+                ++cnt; 
+                pos = i;
             }
         }
-        if (start_pos != size - 1) {
-            split.emplace_back();
-            for (int i = start_pos; i < size; ++i)
-                split.back().emplace_back(input_split[i]);
+        if (cnt == 0) {
+            exec_redirection(input_split);
+            return;
         }
-        exec_redirection(input_split);
+        else if (cnt > 1) {
+            std::cerr << "Error: Only support pipe between two processes." << std::endl;
+        }
+        std::vector<std::string> argv1, argv2;
+        for (int i = 0; i < size; ++i) {
+            if (i < pos) argv1.emplace_back(std::move(input_split[i]));
+            else argv2.emplace_back(std::move(input_split[i]));
+        }
+        int pid, fd[2];
+        pipe(fd);
+        pid = fork();
+        if (pid == 0) {
+            dup2(fd[0], 0);
+
+            exec_redirection(argv2);
+            exit(0);
+        }
+        wait(NULL);
+        dup2(fd[1], 1);
+        exec_redirection(argv1);
     }
 }
-
-#include <cstring>
-#include <iostream>
-#include <filesystem>
-#include <unordered_set>
 
 void exec_redirection(const std::vector<std::string>& argv) {
     int in_pos = -1, in_cnt = 0;
@@ -79,7 +96,7 @@ void exec_redirection(const std::vector<std::string>& argv) {
         }
     }
     new_argv[p] = nullptr;
-    pid_t pid = vfork();
+    pid_t pid = fork();
     if (pid < 0) perror("Error: ");
     else if (pid == 0) {
         int in_stream = 0;
@@ -115,8 +132,5 @@ void exec_redirection(const std::vector<std::string>& argv) {
         }
         exit(1);
     }
-    else {
-        int status;
-        waitpid(pid, &status, 0);
-    }
+    else wait(NULL);
 }
