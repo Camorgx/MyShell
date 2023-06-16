@@ -17,6 +17,10 @@ void parse_command(char* line) {
     while (tokens) {
         parse_argv(tokens, command_count);
         ++command_count;
+        if (command_count > 2) {
+            puts("Error: we only support using pipe with two processes.");
+            return;
+        }
         tokens = strtok_r(NULL, "|", &buf1);
     }
 }
@@ -87,6 +91,7 @@ void execute(command *c) {
                 perror("execvp");
             exit(0);
         }
+        c->pid = pid;
         wait(NULL);
     }
 }

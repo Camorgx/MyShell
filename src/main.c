@@ -1,20 +1,35 @@
 #include "global.h"
 #include "utils.h"
 
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
+char input[MAX_LEN];
+
+void handler(int s) {
+    if (s == SIGINT) {
+        for (int i = 0; i < command_count; ++i) {
+            if (commands[i].pid)
+                kill(commands[i].pid, SIGINT);
+        }
+    }
+}
+
 int main(void) {
-    char input[MAX_LEN];
     init();
+    signal(SIGINT, handler);
     while (1) {
         char prefix[MAX_LEN];
         sprintf(prefix, "[%s %s]", user_string, displayed_directory);
-        printf("%s >>> ", prefix);
-        fgets(input, MAX_LEN, stdin);
+        printf("%s ", prefix);
+        if (!fgets(input, MAX_LEN, stdin)) {
+            puts("exit");
+            break;
+        }
         input[strlen(input) - 1] = '\0';
         if (strlen(input) == 0) continue;
         parse_command(input);
