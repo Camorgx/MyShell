@@ -8,5 +8,5 @@ extern char home_directory[MAX_PATH_LEN];
 extern char displayed_directory[MAX_PATH_LEN];
 
 extern void pwd(void);
-
 extern void cd(char* path);
+extern void history(void);

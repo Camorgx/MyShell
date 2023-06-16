@@ -84,6 +84,7 @@ void execute(command *c) {
     if (strcmp(c->argv[0], "exit") == 0) exit(0);
     else if (strcmp(c->argv[0], "pwd") == 0) pwd();
     else if (strcmp(c->argv[0], "cd") == 0) cd(c->argv[1]);
+    else if (strcmp(c->argv[0], "history") == 0) history();
     else {
         int pid = fork();
         if (pid == 0) {

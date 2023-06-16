@@ -1,14 +1,14 @@
 #include "global.h"
 #include "utils.h"
 
-#include <signal.h>
 #include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
-
-char input[MAX_LEN];
 
 void handler(int s) {
     if (s == SIGINT) {
@@ -22,16 +22,17 @@ void handler(int s) {
 int main(void) {
     init();
     signal(SIGINT, handler);
+    char history_save_path[MAX_PATH_LEN];
+    sprintf(history_save_path, "%s/.MyShell_history", home_directory);
+    read_history(history_save_path);
     while (1) {
         char prefix[MAX_LEN];
-        sprintf(prefix, "[%s %s]", user_string, displayed_directory);
-        printf("%s ", prefix);
-        if (!fgets(input, MAX_LEN, stdin)) {
-            puts("exit");
-            break;
-        }
-        input[strlen(input) - 1] = '\0';
+        sprintf(prefix, "\001\033[""49"";""34""m\002[%s %s]$ \001\033[0m\002", user_string, displayed_directory);
+        char* input = readline(prefix);
+        if (!input) { puts("exit"); break; }
         if (strlen(input) == 0) continue;
+        add_history(input);
+        write_history(history_save_path);
         parse_command(input);
         //dump_command();
         if (command_count == 1) {

@@ -2,6 +2,7 @@
 #include "utils.h"
 
 #include <stdio.h>
+#include <readline/history.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -25,4 +26,10 @@ void cd(char* path) {
         return;
     }
     update_display_dir();   
+}
+
+void history(void) {
+    HIST_ENTRY** hist_list = history_list();
+    for (int i = 0; hist_list[i]; ++i)
+        printf("%6d %s\n", i + 1, hist_list[i]->line);
 }
