@@ -7,7 +7,6 @@
 typedef struct command{
 	int argc;
 	int pid;
-	int job_id;
 	char* argv[MAX_ARGC];
 	char input[MAX_LEN];
 	char output[MAX_LEN];
